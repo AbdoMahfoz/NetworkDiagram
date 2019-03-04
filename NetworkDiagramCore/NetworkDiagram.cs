@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetworkDiagramCore
 {
@@ -71,6 +69,42 @@ namespace NetworkDiagramCore
                 }
             }
             IsSolved = true;
+        }
+        public NetworkDiagramEntity[][] GetCriticalPaths()
+        {
+            if(!IsSolved)
+            {
+                Solve();
+            }
+            List<NetworkDiagramEntity[]> Result = new List<NetworkDiagramEntity[]>();
+            List<NetworkDiagramEntity> Path = new List<NetworkDiagramEntity>();
+            void GetPath(int i)
+            {
+                if(ForwardAdjList[i].Count == 0)
+                {
+                    Result.Add(Path.ToArray());
+                    return;
+                }
+                foreach(int j in ForwardAdjList[i])
+                {
+                    if (Entites[j].TotalFloat == 0)
+                    {
+                        Path.Add(Entites[j]);
+                        GetPath(j);
+                        Path.RemoveAt(Path.Count - 1);
+                    }
+                }
+            }
+            for(int i = 0; i < Entites.Count; i++)
+            {
+                if(BackwardAdjList[i].Count == 0 && Entites[i].TotalFloat == 0)
+                {
+                    Path.Add(Entites[i]);
+                    GetPath(i);
+                    Path.Clear();
+                }
+            }
+            return Result.ToArray();
         }
         public int AddEntity(NetworkDiagramEntity Entity)
         {

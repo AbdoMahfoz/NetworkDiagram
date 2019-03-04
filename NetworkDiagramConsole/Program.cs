@@ -26,7 +26,7 @@ namespace NetworkDiagramConsole
             }
             Console.WriteLine("Please define relations between entites by\n" +
                               "typing the number of the parent entity followed by" +
-                              "the number of the child entity in a sinlge line" +
+                              "the number of the child entity in a single line" +
                               "type \"-1\" (without the quotes) to finish");
             while(true)
             {
@@ -45,6 +45,18 @@ namespace NetworkDiagramConsole
                 Console.WriteLine($"{Entity.Title}:\n\tDuration = {Entity.Duration}\n\tEarliest Start = {Entity.EarliestStart}\n\t" +
                                   $"Earliest Finish = {Entity.EarliestFinish}\n\tLatest Start = {Entity.LatestStart}\n\t" +
                                   $"Latest Finish = {Entity.LatestFinish}\n\tFloat = {Entity.TotalFloat}\n");
+            }
+            var CriticalPaths = networkDiagram.GetCriticalPaths();
+            Console.WriteLine($"There are {CriticalPaths.Length} critical paths:");
+            for(int i = 0; i < CriticalPaths.Length; i++)
+            {
+                Console.Write($"{i + 1}: ");
+                for(int j = 0; j < CriticalPaths[i].Length; j++)
+                {
+                    if (j != 0) Console.Write(", ");
+                    Console.Write(CriticalPaths[i][j].Title);
+                }
+                Console.WriteLine(".");
             }
         }
     }
