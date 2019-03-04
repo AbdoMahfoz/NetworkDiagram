@@ -76,5 +76,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetworkDiagramCore\NetworkDiagramCore.csproj">
+      <Project>{0f6784f5-06bd-4b10-9e3a-6a68521c7973}</Project>
+      <Name>NetworkDiagramCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
